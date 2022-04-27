@@ -14,6 +14,11 @@ export default class App extends React.Component {
   toggleAddTodoModal() {
     this.setState({addTodoVisible: !this.state.addTodoVisible});
   }
+
+  renderlist = list => {
+    return <TodoList list={list} />
+  }
+
   render() {
     return (
       <View style={styles.container}>
