@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import React, { Component } from 'react'
 import { 
   Text, 
@@ -8,10 +9,13 @@ import {
   FlatList, 
   KeyboardAvoidingView, 
   TextInput,
-  Keyboard 
+  Keyboard,
+  Animated 
 } from 'react-native'
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import colors from '../Colors';
+import { Swipeable, GestureHandlerRootView } from 'react-native-gesture-handler';
+
 
 export default class TodoModal extends Component {
   state = {
@@ -37,6 +41,8 @@ export default class TodoModal extends Component {
 
   renderTodo = (todo, index) => {
     return (
+      <GestureHandlerRootView>
+        <Swipeable renderRightActions={(_, dragX) => this.rightActions(dragX, index)}>
       <View style={styles.todoContainer}>
         <TouchableOpacity onPress={() => this.toggleTodoCompleted(index)}>
           <Ionicons 
@@ -58,6 +64,20 @@ export default class TodoModal extends Component {
           {todo.title}
         </Text>
       </View>
+      </Swipeable>
+      </GestureHandlerRootView>
+    );
+  };
+
+  rightActions = (dragX, index) => {
+    return (
+      <TouchableOpacity>
+        <Animated.View style={styles.deleteButton}>
+          <Animated.Text style={{}}>
+            Delete
+          </Animated.Text>
+        </Animated.View>
+      </TouchableOpacity>
     )
   }
 
@@ -168,5 +188,12 @@ const styles = StyleSheet.create({
     color: colors.black,
     fontWeight: "bold",
     fontSize: 16
+  },
+  deleteButton: {
+    flex: 1,
+    backgroundColor: colors.red,
+    justifyContent: "center",
+    alignItems: "center",
+    width: 80
   }
 });
