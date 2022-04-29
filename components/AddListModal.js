@@ -5,7 +5,7 @@ import colors from '../Colors';
 
 
 export default class AddListModal extends Component {
-  backgroundColors = ["#5cd859", "#24a6d9", "#595bd9", "#8022d9", "#d159db", "#d85963", "#d88559"];
+  backgroundColors = ["rgba(39, 51, 89, 0.4)", "rgba(255, 255, 255, 0.2)", "rgba(89, 91, 217, 0.4)", "rgba(128, 34, 217, 0.4)", "rgba(209, 89, 219, 0.4)", "rgba(216, 89, 99, 0.4)", "rgba(216, 133, 89, 0.4)"];
   state ={
     name: "",
     color: this.backgroundColors[4]

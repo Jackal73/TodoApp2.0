@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, Modal, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, Modal, ActivityIndicator, ImageBackground } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import colors from './Colors';
 import TodoList from './components/TodoList';
@@ -7,9 +7,9 @@ import AddListModal from './components/AddListModal';
 import Fire from './Fire';
 
 import _ from 'lodash';
-import { LogBox } from 'react-native/Libraries/NewAppScreen';
+// import { LogBox } from 'react-native/Libraries/NewAppScreen';
 // import {  } from 'react-native';
-
+const image = require('./assets/backimg.png');
 // LogBox.ignoreWarnings(['Setting a timer']);
 const _console = _.clone(console);
 console.warn = message => {
@@ -76,42 +76,50 @@ export default class App extends React.Component {
     }
     return (
       <View style={styles.container}>
-
-      <Modal 
-        animationType="slide" 
-        visible={this.state.addTodoVisible} 
-        onRequestClose={() => this.toggleAddTodoModal()}>
-
-        <AddListModal closeModal={() => this.toggleAddTodoModal()} addList={this.addList} />
-      </Modal>
+      <ImageBackground source={image} style={styles.backgroundImage}>
       
-        <View style={{flexDirection: "row"}}>
-          <View style={styles.divider} />
-            <Text style={styles.title}>
-              Todo <Text style={{fontWeight: "300", color: colors.blue}}>Lists</Text>
-            </Text>
-          <View style={styles.divider} />
-        </View>
+        
+          <View>
+          <Modal 
+            animationType="slide" 
+            visible={this.state.addTodoVisible} 
+            onRequestClose={() => this.toggleAddTodoModal()}>
 
-        <View style={{marginVertical: 48}}>
+            <AddListModal closeModal={() => this.toggleAddTodoModal()} addList={this.addList} />
+          </Modal>
+        
+          <View style={{flexDirection: "row"}}>
+            <View style={styles.divider} />
+              <Text style={styles.title}>
+                Todo <Text style={{fontWeight: "300", color: colors.lightGray}}>Lists</Text>
+              </Text>
+            <View style={styles.divider} />
+          </View>
 
-          <TouchableOpacity style={styles.addList} onPress={() => this.toggleAddTodoModal()}>
-            <AntDesign name="plus" size={16} color={colors.blue} />
-          </TouchableOpacity>
+          <View style={{marginVertical: 48, alignItems: "center"}}>
 
-          <Text style={styles.add}>Add a list</Text>
-        </View>
+            <TouchableOpacity style={styles.addList} onPress={() => this.toggleAddTodoModal()}>
+              <AntDesign name="plus" size={16} color={colors.white} />
+              <Text style={styles.add}>Add a list</Text>
+            </TouchableOpacity>
 
-        <View style={{height: 275, paddingLeft: 32}}>
-          <FlatList 
-            data={this.state.lists} 
-            keyExtractor={item => item.id.toString()} 
-            horizontal={true} 
-            showsHorizontalScrollIndicator={false} 
-            renderItem={({item}) => this.renderList(item)}
-            keyboardShouldPersistTaps="always"
-          />
-        </View>
+            
+          </View>
+
+          <View style={{height: 275, paddingLeft: 32}}>
+            <FlatList 
+              data={this.state.lists} 
+              keyExtractor={item => item.id.toString()} 
+              horizontal={true} 
+              showsHorizontalScrollIndicator={false} 
+              renderItem={({item}) => this.renderList(item)}
+              keyboardShouldPersistTaps="always"
+            />
+          </View>
+          </View>
+        
+      
+      </ImageBackground>
       </View>
     );
   }
@@ -125,30 +133,37 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   divider: {
-    backgroundColor: colors.lightBlue,
+    backgroundColor: colors.black,
     height: 1,
     flex: 1,
     alignSelf: "center"
   },
   title: {
-    fontSize: 38,
+    fontSize: 46,
     fontWeight: "bold",
-    color: colors.black,
+    color: colors.darkGray,
     paddingHorizontal: 64
   },
   addList: {
-    borderWidth: 2,
-    borderColor: colors.lightBlue,
-    borderRadius: 4,
+    width: 100,
+    borderWidth: 3,
+    borderColor: colors.darkGray,
+    borderRadius: 6,
     padding: 16,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",    
   },
-  add: {
-    color: colors.blue,
+  add: {     
+    color: colors.white,
     fontWeight: "600",
     fontSize: 14,
     marginTop: 8
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: "cover",
+    alignItems: "center",
+    justifyContent: "center"
   }
 });
 
