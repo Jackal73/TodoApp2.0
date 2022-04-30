@@ -146,6 +146,12 @@ export default class TodoModal extends Component {
             showsVerticalScrollIndicator={false}
           />
         </View>
+        <TouchableOpacity style={styles.deleteList} 
+          onPress={() => this.props.deleteList(list)}
+          // delayLongPress={1000}
+          >            
+            <Text style={styles.delete}>Delete This List</Text>
+        </TouchableOpacity>
 
         <View style={[styles.section, styles.footer]}>
           <TextInput 
@@ -233,10 +239,25 @@ const styles = StyleSheet.create({
     marginRight: 16,
     marginVertical: 8
   },
-  // backgroundImage: {
-  //   flex: 1,
-  //   resizeMode: "cover",
-  //   alignItems: "center",
-  //   justifyContent: "center"
-  // }
+  deleteList: {
+    // flexDirection: "column",
+    width: 100,
+    borderWidth: 2,
+    borderColor: colors.darkGray,
+    borderRadius: 6,
+    padding: 8,
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
+    marginVertical: 32
+  },
+  delete: {
+    color: colors.red,
+    fontWeight: "normal",
+    fontSize: 14,
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center"
+    // marginTop: 8
+  },
 });
