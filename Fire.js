@@ -59,6 +59,12 @@ class Fire {
     ref.doc(list.id).update(list);
   }
 
+  deleteList(list) {
+    let ref = this.ref;
+
+    ref.doc(list.id).delete();
+  }
+
   get userId() {
     return firebase.auth().currentUser.uid;
   }
@@ -70,6 +76,8 @@ class Fire {
       .doc(this.userId)
       .collection('lists');
   }
+
+  
 
   detach() {
     this.unsubscribe();

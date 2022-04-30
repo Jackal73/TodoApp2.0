@@ -1,16 +1,14 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, FlatList, Modal, ActivityIndicator, ImageBackground } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import colors from './Colors';
 import TodoList from './components/TodoList';
 import AddListModal from './components/AddListModal';
 import Fire from './Fire';
-
 import _ from 'lodash';
-// import { LogBox } from 'react-native/Libraries/NewAppScreen';
-// import {  } from 'react-native';
+
 const image = require('./assets/backimg.png');
-// LogBox.ignoreWarnings(['Setting a timer']);
+
 const _console = _.clone(console);
 console.warn = message => {
   if (message.indexOf('Setting a timer') <= -1) {
@@ -18,7 +16,7 @@ console.warn = message => {
   }
 };
 
-export default class App extends React.Component {
+export default class App extends Component {
   state = {
     addTodoVisible: false,
     lists: [],
@@ -51,7 +49,7 @@ export default class App extends React.Component {
   }
 
   renderList = list => {
-    return <TodoList list={list} updateList={this.updateList} />;
+    return <TodoList list={list} updateList={this.updateList} deleteList={this.deleteList} />;
   };
 
   addList = list => {
@@ -65,6 +63,12 @@ export default class App extends React.Component {
   updateList = list => {
     firebase.updateList(list);
   };
+
+  deleteList = list => {
+    firebase.deleteList(list);
+  };
+
+  
 
   render() {
     if (this.state.loading) {
@@ -91,8 +95,11 @@ export default class App extends React.Component {
           <View style={{flexDirection: "row"}}>
             <View style={styles.divider} />
               <Text style={styles.title}>
-                Todo <Text style={{fontWeight: "300", color: colors.lightGray}}>Lists</Text>
+                Listit <Text style={{fontWeight: "bold", color: colors.darkGray}}>2.0</Text>
               </Text>
+              {/* <Text style={styles.title}>
+                Listicle2.0
+              </Text> */}
             <View style={styles.divider} />
           </View>
 
@@ -102,6 +109,7 @@ export default class App extends React.Component {
               <AntDesign name="plus" size={16} color={colors.white} />
               <Text style={styles.add}>Add a list</Text>
             </TouchableOpacity>
+            
 
             
           </View>
@@ -133,16 +141,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   divider: {
-    backgroundColor: colors.black,
+    backgroundColor: colors.darkGray,
     height: 1,
     flex: 1,
-    alignSelf: "center"
+    alignSelf: "center",
+    
   },
   title: {
-    fontSize: 46,
+    fontSize: 50,
     fontWeight: "bold",
-    color: colors.darkGray,
-    paddingHorizontal: 64
+    color: colors.lightGray,
+    paddingHorizontal: 48
   },
   addList: {
     width: 100,
@@ -159,6 +168,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginTop: 8
   },
+  
   backgroundImage: {
     flex: 1,
     resizeMode: "cover",
