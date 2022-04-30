@@ -17,7 +17,7 @@ import { AntDesign, Ionicons } from '@expo/vector-icons';
 import colors from '../Colors';
 import { Swipeable, GestureHandlerRootView } from 'react-native-gesture-handler';
 
-// const image = require('./assets/modal-screen.png');
+const image = require('../assets/modal-screen.png');
 
 
 export default class TodoModal extends Component {
@@ -25,8 +25,10 @@ export default class TodoModal extends Component {
     newTodo: ""
   };
 
+  
   toggleTodoCompleted = index => {
     let list = this.props.list
+
     list.todos[index].completed = !list.todos[index].completed;
 
     this.props.updateList(list);
@@ -52,12 +54,14 @@ export default class TodoModal extends Component {
     this.props.updateList(list);
   }
 
+  
+
   renderTodo = (todo, index) => {
     return (
       <GestureHandlerRootView>
         <Swipeable renderRightActions={(_, dragX) => this.rightActions(dragX, index)}>
           <View style={styles.todoContainer}>
-          {/* <ImageBackground source={image} style={styles.backgroundImage}> */}
+          
             <TouchableOpacity onPress={() => this.toggleTodoCompleted(index)}>
             
               <Ionicons 
@@ -73,13 +77,13 @@ export default class TodoModal extends Component {
                 styles.todo, 
                 { 
                   textDecorationLine: todo.completed ? 'line-through' : 'none', 
-                  color: todo.completed ? colors.gray : colors.black
+                  color: todo.completed ? colors.darkGray : colors.white
                 }
               ]}
             >
               {todo.title}
             </Text>
-          {/* </ImageBackground> */}
+          
           </View>
         </Swipeable>
       </GestureHandlerRootView>
@@ -110,6 +114,7 @@ export default class TodoModal extends Component {
     )
   }
 
+  
 
   render() {
     const list = this.props.list;
@@ -117,15 +122,17 @@ export default class TodoModal extends Component {
     const taskCount = list.todos.length;
     const completedCount = list.todos.filter(todo => todo.completed).length;
 
+    
+
     return (
       <KeyboardAvoidingView style={{flex: 1}} behavior={Platform.OS === "ios" ? "padding" : "height"}>
       <SafeAreaView style={styles.container}>
-
+      <ImageBackground source={image} style={styles.backgroundImage}>
         <TouchableOpacity 
           style={{position: 'absolute', top: 24, right: 32, zIndex: 10}} 
           onPress={this.props.closeModal}
         >
-          <AntDesign name="close" size={24} color={colors.black} />
+          <AntDesign name="close" size={24} color={colors.white} />
         </TouchableOpacity>
 
         <View style={[styles.section, styles.header, {borderBottomColor: list.color}]}>
@@ -155,7 +162,7 @@ export default class TodoModal extends Component {
 
         <View style={[styles.section, styles.footer]}>
           <TextInput 
-            style={[styles.input, {borderColor: list.color}]} 
+            style={[styles.input, {borderColor: list.color}, {color: colors.white}]} 
             onChangeText={text => this.setState({newTodo: text})} 
             value={this.state.newTodo}
           />
@@ -163,6 +170,7 @@ export default class TodoModal extends Component {
             <AntDesign name="plus" size={16} color={colors.white} />
           </TouchableOpacity>
         </View>
+        </ImageBackground>
       </SafeAreaView>
       </KeyboardAvoidingView>
     );
@@ -172,10 +180,10 @@ export default class TodoModal extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.black,
+    // backgroundColor: colors.black,
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+    // alignItems: 'center',
   },
   section: {
     
@@ -190,12 +198,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     fontWeight: "bold",
-    color: colors.black
+    color: colors.white
   },
   taskCount: {
     marginTop: 4,
     marginBottom: 16,
-    color: colors.gray,
+    color: colors.white,
     fontWeight: "normal"
   },
   footer: {
@@ -207,7 +215,7 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     height: 48,
-    borderWidth: StyleSheet.hairlineWidth,
+    borderWidth: 2,
     borderRadius: 6,
     marginRight: 8,
     paddingHorizontal: 8
@@ -225,7 +233,7 @@ const styles = StyleSheet.create({
     paddingLeft: 32
   },
   todo: {
-    color: colors.black,
+    color: colors.white,
     fontWeight: "bold",
     fontSize: 16
   },
@@ -238,6 +246,12 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     marginRight: 16,
     marginVertical: 8
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: "cover",
+    alignItems: "center",
+    justifyContent: "center"
   },
   deleteList: {
     // flexDirection: "column",
