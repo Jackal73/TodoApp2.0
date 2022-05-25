@@ -104,14 +104,14 @@ export default class App extends Component {
               <View style={styles.divider} />
             </View>
 
-            <View style={{marginVertical: 48, alignItems: "center"}}>
+            <View style={{marginVertical: 72, alignItems: "center"}}>
               <TouchableOpacity style={styles.addList} onPress={() => this.toggleAddTodoModal()}>
                 <AntDesign name="plus" size={16} color={colors.white} />
                 <Text style={styles.add}>Add a list</Text>
               </TouchableOpacity>              
             </View>
 
-            <View style={{height: 275, paddingLeft: 32}}>
+            <View style={{height: 300, paddingLeft: 32}}>
               <FlatList 
                 data={this.state.lists} 
                 keyExtractor={item => item.id.toString()} 
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: colors.darkGray,
     borderRadius: 6,
-    padding: 16,
+    padding: 8,
     alignItems: "center",
     justifyContent: "center",    
   },

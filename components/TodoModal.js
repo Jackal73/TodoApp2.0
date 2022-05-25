@@ -59,7 +59,7 @@ export default class TodoModal extends Component {
           
             <TouchableOpacity onPress={() => this.toggleTodoCompleted(index)}>            
               <Ionicons 
-                name={todo.completed ? "ios-square" : "ios-square-outline"} 
+                name={todo.completed ? "ios-checkmark-circle-outline" : "ios-radio-button-off"} 
                 size={24} 
                 color={colors.gray} 
                 style={{width: 32}} />            
@@ -86,13 +86,13 @@ export default class TodoModal extends Component {
   rightActions = (dragX, index) => {
     const scale = dragX.interpolate({
       inputRange: [-100, 0],
-      outputRange: [1, 0.9],
+      outputRange: [1, 0.8],
       extrapolate: 'clamp'
     });
 
     const opacity = dragX.interpolate({
       inputRange: [-100, -20, 0],
-      outputRange: [1, 0.9, 0],
+      outputRange: [1, 0.8, 0],
       extrapolate: 'clamp'
     })
 
@@ -100,7 +100,7 @@ export default class TodoModal extends Component {
       <TouchableOpacity onPress={() => this.deleteTodo(index)}>
         <Animated.View style={[styles.deleteButton, { opacity: opacity }]}>
           <Animated.Text style={{ color: colors.white, fontWeight: "bold", transform:[{ scale }] }}>
-            Delete
+            <AntDesign name="delete" size={20} color={colors.red} />
           </Animated.Text>
         </Animated.View>
       </TouchableOpacity>
@@ -109,7 +109,6 @@ export default class TodoModal extends Component {
 
   render() {
     const list = this.props.list;
-
     const taskCount = list.todos.length;
     const completedCount = list.todos.filter(todo => todo.completed).length;    
 
@@ -167,14 +166,11 @@ export default class TodoModal extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    // backgroundColor: colors.black,
+  container: {    
     flex: 1,
-    justifyContent: 'center',
-    // alignItems: 'center',
+    justifyContent: 'center',    
   },
-  section: {
-    
+  section: {    
     alignSelf: 'stretch',
   },
   header: {
@@ -226,11 +222,12 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
   deleteButton: {
-    flex: 1,
-    backgroundColor: colors.red,
+    flex: 1,    
     justifyContent: "center",
     alignItems: "center",
-    width: 80,
+    width: 60,
+    borderWidth: .1,
+    borderColor: colors.red,
     borderRadius: 4,
     marginRight: 16,
     marginVertical: 8
@@ -243,8 +240,8 @@ const styles = StyleSheet.create({
   },
   deleteList: {    
     width: 100,
-    borderWidth: 2,
-    borderColor: colors.darkGray,
+    borderWidth: .4,
+    borderColor: colors.red,
     borderRadius: 6,
     padding: 8,
     alignItems: "center",
@@ -255,7 +252,7 @@ const styles = StyleSheet.create({
   delete: {
     color: colors.red,
     fontWeight: "normal",
-    fontSize: 14,
+    fontSize: 12,
     justifyContent: "center",
     alignItems: "center",
     textAlign: "center"    
