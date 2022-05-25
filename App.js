@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, Modal, ActivityIndicator, ImageBackground } from 'react-native';
+import { 
+  StyleSheet, 
+  Text, 
+  View, 
+  TouchableOpacity, 
+  FlatList, 
+  Modal, 
+  ActivityIndicator, 
+  ImageBackground 
+} from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import colors from './Colors';
 import TodoList from './components/TodoList';
@@ -15,7 +24,6 @@ console.warn = message => {
     _console.warn(message);
   }
 };
-
 export default class App extends Component {
   state = {
     addTodoVisible: false,
@@ -66,9 +74,7 @@ export default class App extends Component {
 
   deleteList = list => {
     firebase.deleteList(list);
-  };
-
-  
+  };  
 
   render() {
     if (this.state.loading) {
@@ -80,54 +86,44 @@ export default class App extends Component {
     }
     return (
       <View style={styles.container}>
-      <ImageBackground source={image} style={styles.backgroundImage}>
-      
-        
+        <ImageBackground source={image} style={styles.backgroundImage}>
+
           <View>
-          <Modal 
-            animationType="slide" 
-            visible={this.state.addTodoVisible} 
-            onRequestClose={() => this.toggleAddTodoModal()}>
+            <Modal 
+              animationType="slide" 
+              visible={this.state.addTodoVisible} 
+              onRequestClose={() => this.toggleAddTodoModal()}>
+              <AddListModal closeModal={() => this.toggleAddTodoModal()} addList={this.addList} />
+            </Modal>
+          
+            <View style={{flexDirection: "row"}}>
+              <View style={styles.divider} />
+                <Text style={styles.title}>
+                  Listit <Text style={{fontWeight: "bold", color: colors.darkGray}}>2.0</Text>
+                </Text>                
+              <View style={styles.divider} />
+            </View>
 
-            <AddListModal closeModal={() => this.toggleAddTodoModal()} addList={this.addList} />
-          </Modal>
-        
-          <View style={{flexDirection: "row"}}>
-            <View style={styles.divider} />
-              <Text style={styles.title}>
-                Listit <Text style={{fontWeight: "bold", color: colors.darkGray}}>2.0</Text>
-              </Text>
-              {/* <Text style={styles.title}>
-                Listicle2.0
-              </Text> */}
-            <View style={styles.divider} />
+            <View style={{marginVertical: 48, alignItems: "center"}}>
+              <TouchableOpacity style={styles.addList} onPress={() => this.toggleAddTodoModal()}>
+                <AntDesign name="plus" size={16} color={colors.white} />
+                <Text style={styles.add}>Add a list</Text>
+              </TouchableOpacity>              
+            </View>
+
+            <View style={{height: 275, paddingLeft: 32}}>
+              <FlatList 
+                data={this.state.lists} 
+                keyExtractor={item => item.id.toString()} 
+                horizontal={true} 
+                showsHorizontalScrollIndicator={false} 
+                renderItem={({item}) => this.renderList(item)}
+                keyboardShouldPersistTaps="always"
+              />
+            </View>
           </View>
 
-          <View style={{marginVertical: 48, alignItems: "center"}}>
-
-            <TouchableOpacity style={styles.addList} onPress={() => this.toggleAddTodoModal()}>
-              <AntDesign name="plus" size={16} color={colors.white} />
-              <Text style={styles.add}>Add a list</Text>
-            </TouchableOpacity>
-            
-
-            
-          </View>
-
-          <View style={{height: 275, paddingLeft: 32}}>
-            <FlatList 
-              data={this.state.lists} 
-              keyExtractor={item => item.id.toString()} 
-              horizontal={true} 
-              showsHorizontalScrollIndicator={false} 
-              renderItem={({item}) => this.renderList(item)}
-              keyboardShouldPersistTaps="always"
-            />
-          </View>
-          </View>
-        
-      
-      </ImageBackground>
+        </ImageBackground>
       </View>
     );
   }
@@ -144,8 +140,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.darkGray,
     height: 1,
     flex: 1,
-    alignSelf: "center",
-    
+    alignSelf: "center",    
   },
   title: {
     fontSize: 50,
@@ -167,8 +162,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     fontSize: 14,
     marginTop: 8
-  },
-  
+  },  
   backgroundImage: {
     flex: 1,
     resizeMode: "cover",

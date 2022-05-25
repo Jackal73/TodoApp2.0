@@ -15,16 +15,13 @@ import {
 } from 'react-native'
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import colors from '../Colors';
-import { Swipeable, GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Swipeable, RNGestureHandlerRootView, GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const image = require('../assets/modal-screen.png');
-
-
 export default class TodoModal extends Component {
   state = {
     newTodo: ""
   };
-
   
   toggleTodoCompleted = index => {
     let list = this.props.list
@@ -52,9 +49,7 @@ export default class TodoModal extends Component {
     list.todos.splice(index, 1);
 
     this.props.updateList(list);
-  }
-
-  
+  }  
 
   renderTodo = (todo, index) => {
     return (
@@ -62,14 +57,12 @@ export default class TodoModal extends Component {
         <Swipeable renderRightActions={(_, dragX) => this.rightActions(dragX, index)}>
           <View style={styles.todoContainer}>
           
-            <TouchableOpacity onPress={() => this.toggleTodoCompleted(index)}>
-            
+            <TouchableOpacity onPress={() => this.toggleTodoCompleted(index)}>            
               <Ionicons 
                 name={todo.completed ? "ios-square" : "ios-square-outline"} 
                 size={24} 
                 color={colors.gray} 
-                style={{width: 32}} />
-            
+                style={{width: 32}} />            
             </TouchableOpacity>
 
             <Text 
@@ -112,17 +105,13 @@ export default class TodoModal extends Component {
         </Animated.View>
       </TouchableOpacity>
     )
-  }
-
-  
+  }  
 
   render() {
     const list = this.props.list;
 
     const taskCount = list.todos.length;
-    const completedCount = list.todos.filter(todo => todo.completed).length;
-
-    
+    const completedCount = list.todos.filter(todo => todo.completed).length;    
 
     return (
       <KeyboardAvoidingView style={{flex: 1}} behavior={Platform.OS === "ios" ? "padding" : "height"}>
@@ -176,7 +165,6 @@ export default class TodoModal extends Component {
     );
   }
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -253,8 +241,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
-  deleteList: {
-    // flexDirection: "column",
+  deleteList: {    
     width: 100,
     borderWidth: 2,
     borderColor: colors.darkGray,
@@ -271,7 +258,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     justifyContent: "center",
     alignItems: "center",
-    textAlign: "center"
-    // marginTop: 8
+    textAlign: "center"    
   },
 });

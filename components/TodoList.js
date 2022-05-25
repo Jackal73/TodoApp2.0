@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Modal } from 'react-native';
 import colors from '../Colors';
 import TodoModal from './TodoModal';
-
 export default class TodoList extends Component {
   state = {
     showListVisible: false
@@ -54,12 +53,9 @@ export default class TodoList extends Component {
             </View>
           </View>
         </TouchableOpacity>
-      </View>
-      
+      </View>      
     );
-  }
-
-  
+  }  
 };
 
 const styles = StyleSheet.create({

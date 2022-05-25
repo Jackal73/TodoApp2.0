@@ -9,7 +9,6 @@ const firebaseConfig = {
   messagingSenderId: "324303748353",
   appId: "1:324303748353:web:6f2b10bb76bc8026ce2f00"
 }
-
 class Fire {
   constructor(callback) {
     this.init(callback)
@@ -49,19 +48,16 @@ class Fire {
 
   addList(list) {
     let ref = this.ref;
-
     ref.add(list);
   }
 
   updateList(list) {
-    let ref = this.ref
-
+    let ref = this.ref;
     ref.doc(list.id).update(list);
   }
 
   deleteList(list) {
     let ref = this.ref;
-
     ref.doc(list.id).delete();
   }
 
@@ -75,9 +71,7 @@ class Fire {
       .collection('users')
       .doc(this.userId)
       .collection('lists');
-  }
-
-  
+  }  
 
   detach() {
     this.unsubscribe();

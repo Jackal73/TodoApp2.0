@@ -1,4 +1,12 @@
-import { Text, StyleSheet, View, KeyboardAvoidingView, TouchableOpacity, TextInput, ImageBackground } from 'react-native';
+import { 
+  Text, 
+  StyleSheet, 
+  View, 
+  KeyboardAvoidingView, 
+  TouchableOpacity, 
+  TextInput, 
+  ImageBackground 
+} from 'react-native';
 import React, { Component } from 'react';
 import { AntDesign } from '@expo/vector-icons';
 import colors from '../Colors';
@@ -12,12 +20,10 @@ export default class AddListModal extends Component {
   };
 
   createTodo = () => {
-    const {name, color} = this.state
-
+    const {name, color} = this.state;
     const list = {name, color};
 
     this.props.addList(list);
-
     this.setState({name: ""});
     this.props.closeModal();
   };
@@ -34,7 +40,7 @@ export default class AddListModal extends Component {
     return (
       <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : "height"}>
 
-<ImageBackground source={image} style={styles.backgroundImage}>
+      <ImageBackground source={image} style={styles.backgroundImage}>
         <TouchableOpacity style={{position: "absolute", top: 64, right: 32}} onPress={this.props.closeModal}>
           <AntDesign name="close" size={24} color={colors.white} />
         </TouchableOpacity>
@@ -46,8 +52,7 @@ export default class AddListModal extends Component {
             placeholder="List Name ?" 
             placeholderTextColor={colors.lightGray}            
             selectionColor={colors.white}
-            onChangeText={text => this.setState({name: text})}
-            
+            onChangeText={text => this.setState({name: text})}            
           />
 
           <View style={{flexDirection: "row", justifyContent: "space-between", marginTop: 12}}>
@@ -61,7 +66,7 @@ export default class AddListModal extends Component {
           </TouchableOpacity>
         </View>
 
-</ImageBackground>
+      </ImageBackground>
       </KeyboardAvoidingView>
     );
   }
@@ -70,8 +75,7 @@ export default class AddListModal extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    // alignItems: 'center',
+    justifyContent: 'center'    
   },
   title: {
     fontSize: 28,
@@ -81,8 +85,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   input: {
-    borderWidth: 2,
-    // borderColor: colors.blue,
+    borderWidth: 2,    
     borderRadius: 6,
     height: 50,
     marginTop: 8,
