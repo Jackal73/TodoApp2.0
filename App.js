@@ -1,26 +1,26 @@
-import React, { Component } from 'react';
-import { 
-  StyleSheet, 
-  Text, 
-  View, 
-  TouchableOpacity, 
-  FlatList, 
-  Modal, 
-  ActivityIndicator, 
-  ImageBackground 
-} from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
-import colors from './Colors';
-import TodoList from './components/TodoList';
-import AddListModal from './components/AddListModal';
-import Fire from './Fire';
-import _ from 'lodash';
+import React, { Component } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  FlatList,
+  Modal,
+  ActivityIndicator,
+  ImageBackground,
+} from "react-native";
+import { AntDesign } from "@expo/vector-icons";
+import colors from "./Colors";
+import TodoList from "./components/TodoList";
+import AddListModal from "./components/AddListModal";
+import Fire from "./Fire";
+import _ from "lodash";
 
-const image = require('./assets/backimg.png');
+const image = require("./assets/backimg.png");
 
 const _console = _.clone(console);
-console.warn = message => {
-  if (message.indexOf('Setting a timer') <= -1) {
+console.warn = (message) => {
+  if (message.indexOf("Setting a timer") <= -1) {
     _console.warn(message);
   }
 };
@@ -29,7 +29,7 @@ export default class App extends Component {
     addTodoVisible: false,
     lists: [],
     user: {},
-    loading: true
+    loading: true,
   };
 
   componentDidMount() {
@@ -38,9 +38,9 @@ export default class App extends Component {
         return alert("Uh oh, something went wrong!");
       }
 
-      firebase.getLists(lists => {
-        this.setState({lists, user}, () => {
-          this.setState({loading: false});
+      firebase.getLists((lists) => {
+        this.setState({ lists, user }, () => {
+          this.setState({ loading: false });
         });
       });
 
@@ -48,33 +48,33 @@ export default class App extends Component {
     });
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     firebase.detach();
   }
 
   toggleAddTodoModal() {
-    this.setState({addTodoVisible: !this.state.addTodoVisible});
+    this.setState({ addTodoVisible: !this.state.addTodoVisible });
   }
 
-  renderList = list => {
+  renderList = (list) => {
     return <TodoList list={list} updateList={this.updateList} deleteList={this.deleteList} />;
   };
 
-  addList = list => {
+  addList = (list) => {
     firebase.addList({
       name: list.name,
       color: list.color,
-      todos: []
+      todos: [],
     });
-  }
+  };
 
-  updateList = list => {
+  updateList = (list) => {
     firebase.updateList(list);
   };
 
-  deleteList = list => {
+  deleteList = (list) => {
     firebase.deleteList(list);
-  };  
+  };
 
   render() {
     if (this.state.loading) {
@@ -87,42 +87,41 @@ export default class App extends Component {
     return (
       <View style={styles.container}>
         <ImageBackground source={image} style={styles.backgroundImage}>
-
           <View>
-            <Modal 
-              animationType="slide" 
-              visible={this.state.addTodoVisible} 
-              onRequestClose={() => this.toggleAddTodoModal()}>
+            <Modal
+              animationType="slide"
+              visible={this.state.addTodoVisible}
+              onRequestClose={() => this.toggleAddTodoModal()}
+            >
               <AddListModal closeModal={() => this.toggleAddTodoModal()} addList={this.addList} />
             </Modal>
-          
-            <View style={{flexDirection: "row"}}>
+
+            <View style={{ flexDirection: "row" }}>
               <View style={styles.divider} />
-                <Text style={styles.title}>
-                  Listit <Text style={{fontWeight: "bold", color: colors.darkGray}}>2.0</Text>
-                </Text>                
+              <Text style={styles.title}>
+                Listit <Text style={{ fontWeight: "bold", color: colors.darkGray }}>2.0</Text>
+              </Text>
               <View style={styles.divider} />
             </View>
 
-            <View style={{marginVertical: 72, alignItems: "center"}}>
+            <View style={{ marginVertical: 72, alignItems: "center" }}>
               <TouchableOpacity style={styles.addList} onPress={() => this.toggleAddTodoModal()}>
                 <AntDesign name="plus" size={16} color={colors.white} />
                 <Text style={styles.add}>Add a list</Text>
-              </TouchableOpacity>              
+              </TouchableOpacity>
             </View>
 
-            <View style={{height: 300, paddingLeft: 32}}>
-              <FlatList 
-                data={this.state.lists} 
-                keyExtractor={item => item.id.toString()} 
-                horizontal={true} 
-                showsHorizontalScrollIndicator={false} 
-                renderItem={({item}) => this.renderList(item)}
+            <View style={{ height: 300, paddingLeft: 32 }}>
+              <FlatList
+                data={this.state.lists}
+                keyExtractor={(item) => item.id.toString()}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                renderItem={({ item }) => this.renderList(item)}
                 keyboardShouldPersistTaps="always"
               />
             </View>
           </View>
-
         </ImageBackground>
       </View>
     );
@@ -132,21 +131,21 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    // alignItems: "center",
+    justifyContent: "center",
   },
   divider: {
     backgroundColor: colors.darkGray,
     height: 1,
     flex: 1,
-    alignSelf: "center",    
+    alignSelf: "center",
   },
   title: {
     fontSize: 50,
     fontWeight: "bold",
     color: colors.lightGray,
-    paddingHorizontal: 48
+    paddingHorizontal: 48,
   },
   addList: {
     width: 100,
@@ -155,19 +154,18 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     padding: 8,
     alignItems: "center",
-    justifyContent: "center",    
+    justifyContent: "center",
   },
-  add: {     
+  add: {
     color: colors.white,
     fontWeight: "600",
     fontSize: 14,
-    marginTop: 8
-  },  
+    marginTop: 8,
+  },
   backgroundImage: {
     flex: 1,
     resizeMode: "cover",
     alignItems: "center",
-    justifyContent: "center"
-  }
+    justifyContent: "center",
+  },
 });
-
